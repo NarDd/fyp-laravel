@@ -1,0 +1,28 @@
+@for($i = 0 ; $i < count($dates) ; $i++)
+<div class="row" id="date_rows">
+  <div class="col s12">
+    <h5>Event Time and Date</h5>
+  <div class="input-field col s3">
+    <input id="datefrom" placeholder="e.g 22/7/1992" value="{{$dates->from_date[$i]}}" name="datefrom[]" type="text" class="validate datepicker">
+    <label for="datefrom">Date From</label>
+  </div>
+  <div class="input-field col s3">
+    <input id="dateto" placeholder="e.g 22/7/1992" value="{{$dates->to_date[$i]}}" name="dateto[]" type="text" class="validate datepicker">
+    <label for="dateto">Date To</label>
+  </div>
+  <div class="input-field col s2">
+    <input id="start_time" placeholder="e.g 12:00" value="{{$dates->from_time[$i]}}" name="start_time[]" type="text" class="validate timepicker">
+    <label for="start_time">Start Time</label>
+  </div>
+  <div class="input-field col s2">
+    <input id="end_time" placeholder="e.g 13:00" name="end_time[]" value="{{$dates->to_date[$i]}}" type="text" class="validate timepicker">
+    <label for="end_time">End Time</label>
+  </div>
+  <div class="col s2">
+    <a id="add_date" href="#!" class="btn-floating btn-medium scale-transition right">
+       <i class="material-icons">add</i>
+    </a>
+  </div>
+  </div>
+</div>
+@endfor

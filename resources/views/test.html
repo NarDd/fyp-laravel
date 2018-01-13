@@ -1,0 +1,49 @@
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar sticky-top">
+      <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('img/MatchIt_LogoHands.png') }}" style="height:40px"/> Match It!</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" >
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('home') }}"><i class="material-icons" style="float:left">home</i>Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('upcoming.events') }}"><i class="material-icons" style="float:left">event</i>Upcoming Events</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="material-icons" style="float:left">history</i>Past Events</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="material-icons" style="float:left">settings</i>Admin</a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{{ route('admin.event.create') }}">Create Event</a>
+                  <a class="dropdown-item" href="#">Update Events</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{{ route('admin.manage.userlist') }}">Volunteer Approval</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+          @if(!auth()->check())
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('register') }}"><i class="material-icons" style="float:left">assignment_ind</i>Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="modal" href="#loginModal"><i class="material-icons" style="float:left">settings</i>Login</a>
+          </li>
+          @else
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('profile.view') }}"><i class="material-icons" style="float:left">face</i>Profile</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{route('logout.post')}}" onclick="document.getElementById('logout-form').submit();"><i class="material-icons" style="float:left">exit_to_app</i>Logout</a>
+            <form id="logout-form" action="{{ route('logout.post') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
+            </li>
+          @endif
+        <ul>
+    </div>
+</nav>
