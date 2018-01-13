@@ -187,7 +187,7 @@ class EventController extends Controller
         }
 
 
-        return redirect()->route('event.view',['id' => $event->id]);
+        return redirect()->route('event.view',['id' => $event->id, 'past' => 0]);
       }
     }
 
@@ -224,7 +224,7 @@ class EventController extends Controller
       }
       else
       {
-        return redirect()->route('event.view',['id' => $event->id]);
+        return redirect()->route('event.view',['id' => $event->id, 'past' => 0]);
       }
     }
 
