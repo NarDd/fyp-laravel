@@ -30,15 +30,10 @@ class EventController extends Controller
   }
 
   public function getEventAttendance($id, $user){
-    $eventdates = Event_Has_Dates::where('event_id', $id)->get();
-    // $attendance = Attendance::whereHas('eventdates', function($q) use ($user) {
-    //   $q->where('event_has_dates_id', )
-    // })
-    $attendance = Attendance::where('user_id', $user)->whereHas('eventdates', function($q) use ($id) {
-      $q->where('event_id', $id);
-    })->get();
-
-    return response($attendance)->setStatusCode(200);;
+    $attendance = Event_Has_Dates::with(['attendance' => function ($query) use ($user) {
+    $query->where('user_id', $user);
+    }])->where('event_id',$id)->get();
+    return response($attendance)->setStatusCode(200);
   }
 
 
