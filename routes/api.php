@@ -12,7 +12,7 @@ Route::group(['namespace' => 'API', 'middleware' => ['cors']], function () {
   Route::get('/pastevents',['as' => 'api.past', 'uses' => 'EventController@getPastEvent']);
   Route::get('/myevent/{id}',['as' => 'api.myevent', 'uses' => 'EventController@getMyEvent']);
 
-  Route::post('/setVolunter',['as' => 'api.volunteer', 'uses' => 'EventController@postVolunteer']);
+  Route::post('/setVolunteer',['as' => 'api.volunteer', 'uses' => 'EventController@postVolunteer']);
   Route::post('/setWithdraw',['as' => 'api.withdraw', 'uses' => 'EventController@postWithdraw']);
 
   Route::post('/attendance',['as' => 'api.attendance', 'uses' => 'EventController@postAttendance']);

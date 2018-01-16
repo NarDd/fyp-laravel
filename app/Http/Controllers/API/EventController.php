@@ -85,17 +85,28 @@ class EventController extends Controller
   }
 
   public function postVolunteer(Request $request){
-    $event = new Event_Has_Users;
-    $event->user_id = $request->id;
-    $event->status = 1;
-    $event->event_id = $request->event_id;
-    $event->save();
-    return response()->json(compact('event'));
+    $setEventHasUser = new Event_Has_Users;
+    $setEventHasUser->event_id = $request->event["id"];
+    $setEventHasUser->user_id = $request->userid;
+    $setEventHasUser->save();
+    for($i = 0 ; $i < count($request->event["eventdates"]) ; $i++){
+      $attendance = new Attendance;
+      $attendance->event_has_dates_id = $request->event["eventdates"][$i]['id'];
+      $attendance->user_id = $request->userid;
+      $attendance->attendance = false;
+      $attendance->save();
+    }
+
+    return response()->json(compact('setEventHasUser'));
+
   }
 
   public function postWithdraw(Request $request){
-    $usereventstatus = Event_Has_Users::where('user_id', $request->id)->where('event_id',$request->event_id)->get()->first()->delete();
-    return response()->json(compact('usereventstatus'));
+    $usereventstatus = Event_Has_Users::where('user_id', $request->userid)->where('event_id',$request->event["id"])->delete();
+    for($i = 0 ; $i < count($request->event["eventdates"]); $i++){
+      $attendance = Attendance::where("event_has_dates_id",$request->event["eventdates"][$i]["id"])->where("user_id",$request->userid)->delete();
+    }
+    return response()->json(compact('request'));
   }
 
 
