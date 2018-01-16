@@ -61,22 +61,25 @@ class EventController extends Controller
     $attendance->user_id = $request->user_id;
     $attendance->event_has_dates_id = $request->event_id;
     $attendance->save();
-    return response()->json(compact('attendance'));
+    return response($attendance)->setStatusCode(200);
   }
 
   public function getMyEvent($id){
-    $events = Event::with('eventdates','photos')->has('users', $id)->get();
-    return response()->json(compact('events'));
+    $eve = Event::with('photos','eventdates')->whereHas('users', function ($query) {
+    $query->where('user_id', 2);
+    })->get();
+
+    return response($eve)->setStatusCode(200);
   }
 
   public function getPresent($id){
     $events = Attendance::with('users')->where('event_has_dates_id', $id)->get();
-    return response()->json(compact('events'));
+    return response($events)->setStatusCode(200);;
   }
 
   public function getAbsent($id){
     $events = Attendance::with('users')->where('event_has_dates_id', $id)->get();
-    return response()->json(compact('events'));
+    return response($events)->setStatusCode(200);
   }
 
   public function postVolunteer(Request $request){
@@ -92,7 +95,7 @@ class EventController extends Controller
       $attendance->save();
     }
 
-    return response()->json(compact('setEventHasUser'));
+    return response($setEventHasUser)->setStatusCode(200);
 
   }
 
@@ -101,7 +104,7 @@ class EventController extends Controller
     for($i = 0 ; $i < count($request->event["eventdates"]); $i++){
       $attendance = Attendance::where("event_has_dates_id",$request->event["eventdates"][$i]["id"])->where("user_id",$request->userid)->delete();
     }
-    return response()->json(compact('request'));
+    return response($request)->setStatusCode(200);
   }
 
 
