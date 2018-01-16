@@ -38,7 +38,7 @@ class EventController extends Controller
       $q->where('event_id', $id);
     })->get();
 
-    return response($events)->setStatusCode(200);;
+    return response($attendance)->setStatusCode(200);;
   }
 
 
