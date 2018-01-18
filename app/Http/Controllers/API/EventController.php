@@ -73,12 +73,12 @@ class EventController extends Controller
   }
 
   public function getPresent($id){
-    $events = Attendance::with('users')->where('event_has_dates_id', $id)->get();
+    $events = Attendance::with('users')->where('event_has_dates_id', $id)->where('attendance',1)->get();
     return response($events)->setStatusCode(200);;
   }
 
   public function getAbsent($id){
-    $events = Attendance::with('users')->where('event_has_dates_id', $id)->get();
+    $events = Attendance::with('users')->where('event_has_dates_id', $id)->where('attendance',0)->get();
     return response($events)->setStatusCode(200);
   }
 
