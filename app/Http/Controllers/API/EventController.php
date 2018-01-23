@@ -26,7 +26,7 @@ class EventController extends Controller
         array_push($events, $evt);
       }
     }
-    return response($events)->setStatusCode(200);;
+    return response($events)->setStatusCode(200);
   }
 
   public function getEventAttendance($id, $user){
@@ -34,6 +34,32 @@ class EventController extends Controller
     $query->where('user_id', $user);
     }])->where('event_id',$id)->get();
     return response($attendance)->setStatusCode(200);
+  }
+
+  public function undoMarking(Request $request){
+    $eventid = $request->eventid;
+
+    foreach($request->users as $userid){
+      $attendance = Attendance::where('event_has_dates_id',$eventid)->where('user_id',$userid)->first();
+      $attendance->attendance = 0;
+      $attendance->save();
+    }
+    return response($request->users);
+  }
+
+  public function bleMarkAttendance(Request $request){
+
+    return response($request->all);
+  }
+
+  public function markAttendance(Request $request){
+    $eventid = $request->eventid;
+    foreach($request->users as $userid){
+      $attendance = Attendance::where('event_has_dates_id',$eventid)->where('user_id',$userid)->first();
+      $attendance->attendance = 1;
+      $attendance->save();
+    }
+    return response($request->users);
   }
 
 
@@ -46,7 +72,7 @@ class EventController extends Controller
       if ($lastdate->date < (Carbon::today()->toDateString())) // TODO compare carbon date
         array_push($events, $evt);
     }
-    return response($events)->setStatusCode(200);;
+    return response($events)->setStatusCode(200);
   }
 
   public function getSecret($id)
@@ -65,8 +91,8 @@ class EventController extends Controller
   }
 
   public function getMyEvent($id){
-    $eve = Event::with('photos','eventdates')->whereHas('users', function ($query) {
-    $query->where('user_id', 2);
+    $eve = Event::with('photos','eventdates')->whereHas('users', function ($query) use ($id)  {
+    $query->where('user_id', $id);
     })->get();
 
     return response($eve)->setStatusCode(200);
@@ -74,7 +100,7 @@ class EventController extends Controller
 
   public function getPresent($id){
     $events = Attendance::with('users')->where('event_has_dates_id', $id)->where('attendance',1)->get();
-    return response($events)->setStatusCode(200);;
+    return response($events)->setStatusCode(200);
   }
 
   public function getAbsent($id){

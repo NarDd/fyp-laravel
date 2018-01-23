@@ -15,6 +15,10 @@ Route::group(['namespace' => 'API', 'middleware' => ['cors']], function () {
   Route::post('/setVolunteer',['as' => 'api.volunteer', 'uses' => 'EventController@postVolunteer']);
   Route::post('/setWithdraw',['as' => 'api.withdraw', 'uses' => 'EventController@postWithdraw']);
 
+  Route::post('/undomarked',['as' => 'api.undomarked', 'uses' => 'EventController@undoMarking']);
+  Route::post('/marked',['as' => 'api.markattendance', 'uses' => 'EventController@markAttendance']);
+  Route::post('/blemark',['as' => 'api.blemark', 'uses' => 'EventController@bleMarkAttendance']);
+
   Route::post('/attendance',['as' => 'api.attendance', 'uses' => 'EventController@postAttendance']);
   Route::get('/secret/{id}',['as' => 'api.secret', 'uses' => 'EventController@getSecret']);
   Route::get('/present/{id}',['as' => 'api.secret', 'uses' => 'EventController@getPresent']);
