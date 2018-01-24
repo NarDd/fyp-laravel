@@ -48,7 +48,6 @@ class EventController extends Controller
   }
 
   public function bleMarkAttendance(Request $request){
-
     return response($request->all);
   }
 
