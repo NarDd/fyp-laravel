@@ -83,9 +83,8 @@ class EventController extends Controller
   }
 
   public function postAttendance(Request $request){
-    $attendance = new Attendance;
-    $attendance->user_id = $request->user_id;
-    $attendance->event_has_dates_id = $request->event_id;
+    $attendance = Attendance::where('event_has_dates_id',$request->event_id)->where('user_id',$request->user_id)->first();
+    $attendance->attendance = 1;
     $attendance->save();
     return response($attendance)->setStatusCode(200);
   }

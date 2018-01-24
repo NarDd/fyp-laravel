@@ -130,9 +130,9 @@ class EventController extends Controller
          }
         }
 
-        $secret = rand(1,99);
-        $major = rand(1,99);
-        $minor = rand(1,99);
+        $secret = rand(1,9);
+        $major = rand(1,9);
+        $minor = rand(1,9);
 
         for($i = 0 ; $i < count($request->date); $i++){
           $event_dates = new Event_Has_Dates;
