@@ -49,8 +49,25 @@ class EventController extends Controller
     }
 
     public function getAllEvent(){
-        $events = Event::all();
-        return view("pages.admin.allevents",compact('events'));
+      $allevents = Event::with('eventdates','photos')->get();
+      $currentEvents = array();
+      foreach($allevents as $evt) {
+        $lastdate = $evt->eventdates()->orderBy('date', 'desc')->first();
+        if ($lastdate->date >= (Carbon::today()->toDateString())) // TODO compare carbon date
+        {
+          array_push($currentEvents, $evt);
+        }
+      }
+
+
+      $pastEvents = array();
+      foreach($allevents as $evt) {
+        $lastdate = $evt->eventdates()->orderBy('date','desc')->first();
+        if ($lastdate->date < (Carbon::today()->toDateString())) // TODO compare carbon date
+          array_push($pastEvents, $evt);
+      }
+
+      return view("pages.admin.allevents",compact('currentEvents','pastEvents'));
     }
 
     public function getEditEvent(Request $request, $id)

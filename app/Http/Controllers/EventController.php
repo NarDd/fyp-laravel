@@ -61,19 +61,31 @@ class EventController extends Controller
       $photo =  Event::find($id)->photos()->get();
       $dates = Event::find($id)->eventdates()->get();
       $skill = Event::find($id)->skills()->get();
-      $user = Auth::user()->id;
-      $isadmin = Auth::user()->isadmin;
 
-      $usereventstatus = Event_Has_Users::where('user_id', $user)->where('event_id',$id)->get()->first();
+  
 
-      if($usereventstatus){
-        $status = 1;
+      if(Auth::check()){
+        $user = Auth::id();
+        $isadmin = Auth::user()->isadmin;
+
+        $usereventstatus = Event_Has_Users::where('user_id', $user)->where('event_id',$id)->get()->first();
+
+        if($usereventstatus){
+          $status = 1;
+        }
+        else{
+          $status = 0;
+        }
+
+        return view("pages.event",compact('event','dates','skill','photo','user','status','past','isadmin'));
       }
       else{
-        $status = 0;
+        $user = 0;
+        return view("pages.event",compact('event','dates','skill','photo','user','status','past','isadmin'));
       }
 
-      return view("pages.event",compact('event','dates','skill','photo','user','status','past','isadmin'));
+
+
     }
 
     public function postVolunteer(Request $request){

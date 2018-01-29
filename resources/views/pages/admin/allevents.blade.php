@@ -12,7 +12,7 @@
       <div class="card">
         <div class="row">
           <div class="col s12">
-          <h5>Select Events</h5>
+          <h5>All Events</h5>
           </div>
         </div>
 
@@ -29,36 +29,92 @@
 
         <div class="row">
           <div class="col s12">
-            @foreach($events as $event)
-                  <div class="col s4 searchable">
-                    <div class="card">
-                        <div class="card-img"></div>
-                        <div class="card-block">
-                          <div class="card-div">
-                          <div class="col s12">
-                            <h5 class="card-title">{{$event->event_name}}</h5>
-                          </div>
+            @foreach($currentEvents as $event)
+                  <div class="col s6 searchable equalize">
+                    <div class="card main-card">
+                      <div class="card-image">
 
-                          <div class="col s6">
-                          <span class="card-text">Date:</span>
-                          </div>
-                          <div class="col s6">
-                          <span class="card-text">Time:</span>
-                          </div>
-                          <div class="col s12">
-                          <p class="card-text">Location:</p>
-                          </div>
-
-                        <div class="row">
-                          <div class="col s12">
-                          <a href="{{route('event.view',$event->id)}}" class="btn btn-primary right">Update Event</a>
-                          </div>
-                        </div>
-                          </div>
-                        </div>
+                      <img style="max-height:300px" src="{{ asset('eventimg/' . $event->photos[0]->url) }}"/>
+                      <span class="card-title">{{$event->event_name}}</span>
+                      <a href="{{route('event.view',['id' => $event->id, 'past' => 0])}}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">arrow_forward</i></a>
                       </div>
+
+                    <div class="card-content">
+                      <div class="row">
+                      <div class="col s2">
+                      <span class="card-text">Date:</span>
+                      </div>
+
+                      <div class="col s4">
+                      @foreach($event->eventdates as $dates)
+                      <span class="card-text">{{$dates->date}}</span><br>
+                      @endforeach
+                      </div>
+
+                      <div class="col s2">
+                      <span class="card-text">Time:</span>
+                      </div>
+
+                      <div class="col s4">
+                        @foreach($event->eventdates as $dates)
+                        <span class="card-text">{{$dates->from_time}} - {{$dates->to_time}} </span><br>
+                        @endforeach
+                      </div>
+                      </div>
+                      <div class="col s12">
+
+                      <div class="row">
+                      <p class="card-text">Location: {{$event->location}}</p>
+                      </div>
+                      </div>
+                    </div>
+                    </div>
                   </div>
             @endforeach
+
+            @foreach($pastEvents as $event)
+                  <div class="col s6 searchable equalize">
+                    <div class="card main-card">
+                      <div class="card-image">
+
+                      <img style="max-height:300px" src="{{ asset('eventimg/' . $event->photos[0]->url) }}"/>
+                      <span class="card-title">{{$event->event_name}}</span>
+                      <a href="{{route('event.view',['id' => $event->id, 'past' => 1])}}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">arrow_forward</i></a>
+                      </div>
+
+                    <div class="card-content">
+                      <div class="row">
+                      <div class="col s2">
+                      <span class="card-text">Date:</span>
+                      </div>
+
+                      <div class="col s4">
+                      @foreach($event->eventdates as $dates)
+                      <span class="card-text">{{$dates->date}}</span><br>
+                      @endforeach
+                      </div>
+
+                      <div class="col s2">
+                      <span class="card-text">Time:</span>
+                      </div>
+
+                      <div class="col s4">
+                        @foreach($event->eventdates as $dates)
+                        <span class="card-text">{{$dates->from_time}} - {{$dates->to_time}} </span><br>
+                        @endforeach
+                      </div>
+                      </div>
+                      <div class="col s12">
+
+                      <div class="row">
+                      <p class="card-text">Location: {{$event->location}}</p>
+                      </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+            @endforeach
+
           </div>
         </div>
 

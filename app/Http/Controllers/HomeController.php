@@ -32,7 +32,9 @@ class HomeController extends Controller
       // $stuff = Event::with('EventDates')->find('1');
       // dd($stuff);
       $events = Event::all();
-      return view("pages.home",compact('events'));
+      $slickphotos = Event::with("photos")->orderBy('id','desc')->take(5)->get();
+
+      return view("pages.home",compact('events','slickphotos'));
     }
 
 

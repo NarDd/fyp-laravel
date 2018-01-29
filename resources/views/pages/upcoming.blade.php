@@ -20,7 +20,6 @@
         <div class="container">
           <div class="input field col s12">
             <div class="input-field col s12">
-              <i class="material-icons prefix">search</i>
               <input id="search" type="text" class="form-control searchbar" placeholder="Search" class="validate">
             </div>
           </div>

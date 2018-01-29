@@ -91,10 +91,10 @@
               @if (Session::has('Invalid Credentials'))
               <div class="alert alert-danger">{{Session::get('Invalid Credentials')}}</div>
               @endif
-              </div>
+        </div>
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <input type="submit" value="Login" class="btn btn-primary right">
-        </div>
+      </div>
 
 
 
@@ -124,32 +124,26 @@
   </form>
 </div>
 
-
-
 @yield('content')
 
 <div class="container main-container">
 @yield('container')
 </div>
 
-<!-- Login Modal Script -->
-@if (Session::has('Invalid Credentials'))
-<script type="text/javascript">
-  $('#loginModal').modal();
-</script>
-@endif
-
 <script type="text/javascript">
 $(document).ready(function(){
-  // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-  $('#loginModal').modal();
-  $('.nav li').click(function(){
-    $('.nav li').removeClass('active');
-    $(this).addClass('active');
-  })
+  $('.modal').modal();
 });
 </script>
 
+<!-- Login Modal Script -->
+@if (Session::has('Invalid Credentials'))
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#loginModal').modal('open');
+});
+</script>
+@endif
 
 @yield("scripts")
 
