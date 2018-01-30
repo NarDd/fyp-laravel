@@ -11,7 +11,7 @@
   <div class="card" id="userlist-card" id="top-card">
       <div class="row">
         <div class="col s12">
-          <h5>User Management</h5>
+          <h5>Admin Management</h5>
         </div>
       </div>
 
@@ -23,8 +23,7 @@
               <th>Name</th>
               <th>Email</th>
               <th>Admin</th>
-              <th>Current Status</th>
-              <th>Change Status</th>
+              <th>Set Admin Privileges</th>
             </tr>
           </thead>
           <tbody>
@@ -40,19 +39,12 @@
                   @endif
                 </td>
 
-                <td>
-                    {{$user[$i]->status}}
-                </td>
-
-                <td>
+                <td class="left">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                  @if($user[$i]->status == "Pending")
-                  <button value="{{$user[$i]->id}}" name="approve" type="submit" class="btn btn-primary">Set Approve</button>
-                  <button value="{{$user[$i]->id}}" name="reject" type="submit" class="btn btn-primary red">Set Reject</button>
-                  @elseif($user[$i]->status == "Rejected")
-                  <button value="{{$user[$i]->id}}" name="approve" type="submit" class="btn btn-primary">Set Approve</button>
-                  @elseif($user[$i]->status == "Approved")
-                  <button value="{{$user[$i]->id}}" name="reject" type="submit" class="btn btn-primary red">Set Reject</button>
+                  @if($user[$i]->isadmin == true)
+                  <button value="{{$user[$i]->id}}" name="id" type="submit" class="btn btn-primary red">Revoke</button>
+                  @else
+                  <button style="width:100%" value="{{$user[$i]->id}}" name="id" type="submit" class="btn btn-primary">Set</button>
                   @endif
                 </td>
 

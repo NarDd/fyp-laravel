@@ -1,3 +1,20 @@
+/* Custom CSS */
+.slick-slide {
+  position: relative;
+}
+
+.caption {
+  position: absolute;
+  text-align: center;
+  bottom: 50px;
+  padding: 15px;
+  width: 100%;
+  min-height: 38px;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 50;
+  transform: translate3d(0,0,0);
+}
+
 /* Slider */
 .slick-slider
 {

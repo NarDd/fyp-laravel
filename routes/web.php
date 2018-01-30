@@ -35,6 +35,10 @@ Route::post('/events/edit/{id}',['as' => 'admin.event.edit.post','uses' => 'Admi
 
 Route::get('/manage/users',['as' => 'admin.manage.userlist','uses' => 'Admin\UserController@getUserList']);
 Route::post('/manage/users',['as' => 'admin.user.approval','uses' => 'Admin\UserController@postUserList']);
+
+Route::get('/manage/admin',['as' => 'admin.manage.adminlist','uses' => 'Admin\UserController@getAdminList']);
+Route::post('/manage/admin',['as' => 'admin.manage.adminapprove','uses' => 'Admin\UserController@postAdminList']);
+
 Route::get('/manage/users/{id}',['as' => 'admin.manage.user','uses' => 'Admin\UserController@getUser']);
 // Route::post('/manage/users/{id}',['as' => 'admin.user.approval','uses' => 'Admin\UserController@userApproval']);
 

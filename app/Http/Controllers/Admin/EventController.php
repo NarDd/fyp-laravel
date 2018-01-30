@@ -103,15 +103,17 @@ class EventController extends Controller
 
     public function postCreateEvent(Request $request)
     {
+
       $validator = Validator::make($request->all(), [
           'event_name' => 'required',
           'desc' => 'required',
           'location' => 'required',
           'contact_id' => 'required',
           'image' => 'required',
-          'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+          'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+          'date.*' => 'required|date|after:today'
       ]);
-
+    
       if ($validator->fails()) {
           $errors = new Collection;
 
@@ -120,7 +122,7 @@ class EventController extends Controller
               $errors->push($errormsg[0]);
           }
 
-          return redirect()->back()->withErrors($validator);
+          return redirect()->back()->withErrors($validator)->withInput();
       }
 
       $event = new Event;

@@ -45,9 +45,13 @@ class UserController extends Controller
        return view("pages.admin.user",compact('user'));
     }
 
+    public function getAdminList(){
+      $user = User::all();
 
-    public function postUserList(Request $request){
+      return view("pages.admin.manageadmin", compact('user'));
+    }
 
+    public function postAdminList(Request $request){
       $u = User::find($request->id);
       if($u->isadmin == true){
         $u->isadmin = false;
@@ -58,7 +62,28 @@ class UserController extends Controller
       $u->save();
       $user = User::all();
 
-      return view("pages.admin.userlist", compact('user'));
+      return redirect()->back()->withStatus('Form submitted!');
+    }
+
+    public function postUserList(Request $request){
+      if($request->approve){
+        $u = User::find($request->approve);
+        $u->status = "Approved";
+        $u->save();
+        $user = User::all();
+
+        return redirect()->back()->withStatus('Form submitted!');
+      }
+
+      else{
+        $u = User::find($request->reject);
+        $u->status = "Rejected";
+        $u->save();
+        $user = User::all();
+
+        return redirect()->back()->withStatus('Form submitted!');
+      }
+
     }
 
     public function userApproval(Request $request, $id){

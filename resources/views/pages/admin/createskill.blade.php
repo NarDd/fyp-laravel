@@ -22,7 +22,6 @@
 
       <div class="row" id="skill_rows">
         <div class="col s12">
-        <h5>Special Skills Needed</h5>
         <div class="input-field col s11">
           <input id="skill" placeholder="Typing" name="skill_name[]" type="text">
           <label for="skill">Skill Name</label>
@@ -46,10 +45,11 @@
       <div class="row">
         <div class="col s12">
           <h5>All Skills</h5>
-          @foreach($skills as $sk)
-              {{$sk->skill_name}}
-              <br>
-          @endforeach
+            <ul style="padding-left:20px">
+            @foreach($skills as $sk)
+                <li style="list-style-type:disc">{{$sk->skill_name}}</li>
+            @endforeach
+            </ul>
         </div>
       </div>
 

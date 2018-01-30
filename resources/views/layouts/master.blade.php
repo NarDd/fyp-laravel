@@ -26,7 +26,7 @@
 <div class="navbar">
 <nav>
   <div class="row">
-  <div class="col l12">
+  <div class="col s12">
   <div class="nav-wrapper">
     <a id="logo" href="{{ route('home') }}" class="logo"><img src="{{ asset('img/MatchIt_Logo.png') }}" class="logo" alt="logo"/></a>
     <ul class="left hide-on-med-and-down">
@@ -67,9 +67,10 @@
 <ul id="dropdown1" class="dropdown-content">
 <li><a class="dropdown-item" href="{{ route('admin.event.create') }}">Create Event</a></li>
 <li><a class="dropdown-item" href="{{ route('admin.event.viewall') }}">Update Events</a></li>
-<li class="divider"></li>
-<li><a class="dropdown-item" href="{{ route('admin.manage.userlist') }}">Manage User</a></li>
 <li><a class="dropdown-item" href="{{ route('admin.create.skill.get') }}">Add Skills</a></li>
+<li class="divider"></li>
+<li><a class="dropdown-item" href="{{ route('admin.manage.userlist') }}">Account Management</a></li>
+<li><a class="dropdown-item" href="{{ route('admin.manage.adminlist') }}">Admin Management</a></li>
 </ul>
 </header>
 <!--/.Navbar-->

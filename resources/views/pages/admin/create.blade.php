@@ -26,7 +26,7 @@
                 <div class="file-field input-field col s12">
                 <div class="btn">
                   <span>File</span>
-                  <input type="file" name="image[]" multiple>
+                  <input type="file" name="image[]" value="{{ old('image') }}"multiple>
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text"placeholder="Upload one or more files">
@@ -45,7 +45,7 @@
       <div class="row">
         <div class="col s12">
         <div class="input-field col s12">
-          <input id="event_name" placeholder="e.g Fun Run" name="event_name" type="text" class="validate">
+          <input id="event_name" value="{{ old('event_name') }}" placeholder="e.g Fun Run" name="event_name" type="text" class="validate">
           <label for="event_name">Event Name</label>
         </div>
         </div>
@@ -53,7 +53,7 @@
       <div class="row">
         <div class="col s12">
         <div class="input-field col s12">
-          <input id="location"  placeholder="e.g Changi Airport" name="location" type="text" class="validate">
+          <input id="location" value="{{ old('location') }}" placeholder="e.g Changi Airport" name="location" type="text" class="validate">
           <label for="location">Location</label>
         </div>
         </div>
@@ -74,7 +74,7 @@
       <div class="row">
         <div class="col s12">
         <div class="input-field col s12">
-          <textarea id="desc" name="desc" data-length="300" placeholder="e.g This is a fundraiser for the elderly" class="materialize-textarea"></textarea>
+          <textarea id="desc" name="desc" data-length="300" placeholder="e.g This is a fundraiser for the elderly" class="materialize-textarea">{{ old('desc') }}</textarea>
           <label for="desc">Event Description</label>
         </div>
         </div>
