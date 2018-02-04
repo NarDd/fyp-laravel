@@ -71,6 +71,7 @@
 <li class="divider"></li>
 <li><a class="dropdown-item" href="{{ route('admin.manage.userlist') }}">Account Management</a></li>
 <li><a class="dropdown-item" href="{{ route('admin.manage.adminlist') }}">Admin Management</a></li>
+<li><a class="dropdown-item" href="{{ route('admin.manage.companies') }}">Companies Management</a></li>
 </ul>
 </header>
 <!--/.Navbar-->

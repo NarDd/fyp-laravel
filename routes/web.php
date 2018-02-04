@@ -40,6 +40,13 @@ Route::get('/manage/admin',['as' => 'admin.manage.adminlist','uses' => 'Admin\Us
 Route::post('/manage/admin',['as' => 'admin.manage.adminapprove','uses' => 'Admin\UserController@postAdminList']);
 
 Route::get('/manage/users/{id}',['as' => 'admin.manage.user','uses' => 'Admin\UserController@getUser']);
+Route::get('/manage/companies',['as' => 'admin.manage.companies','uses' => 'Admin\CompanyController@getCompanies']);
+Route::post('/manage/companies/add',['as' => 'admin.manage.add.companies.post','uses' => 'Admin\CompanyController@postCompaniesAdd']);
+Route::get('/manage/companies/add',['as' => 'admin.manage.add.companies','uses' => 'Admin\CompanyController@getCompanyAdd']);
+
+Route::get('/companies/{id}',['as' => 'coordinator.view.company','uses' => 'Coordinators\Coordinator@getCompany']);
+Route::post('/companies/{id}',['as' => 'coordinator.view.company.post','uses' => 'Coordinators\Coordinator@postCompany']);
+
 // Route::post('/manage/users/{id}',['as' => 'admin.user.approval','uses' => 'Admin\UserController@userApproval']);
 
 Route::get('/user/adminstatus/{id}',['as' => 'admin.user.setstatus', 'uses' => 'Admin\UserController@getSetStatus']);

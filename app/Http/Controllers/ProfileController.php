@@ -69,7 +69,6 @@ class ProfileController extends Controller
 
     public function getUpdateSkill(){
       $skills = Skills::all();
-      // dd($skills);
       $uskill = User::find(Auth::user()->id)->skills()->get();
       return view('pages.updateskill',compact('uskill','skills'));
     }

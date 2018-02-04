@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Company;
 
 use Session;
 
@@ -67,43 +68,82 @@ class AuthController extends Controller
       return redirect()->route('home');
     }
 
-    public function getRegister()
-    {
-      return view('pages.register');
+    public function getRegister(){
+      $companies = Company::all();
+      return view('pages.register',compact('companies'));
     }
 
     public function postRegister(Request $request)
     {
+
       //unique:table,column,except,idColumn
-      $validator = Validator::make($request->all(), [
-          'name' => 'required',
-          'email' => 'required|email|unique:users,email',
-          'password' => 'required|confirmed',
-      ]);
+      if($request->corporate == 1){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed',
+            'company' => 'required',
+        ]);
 
-      if ($validator->fails()) {
-          $errors = new Collection;
+        if ($validator->fails()) {
+            $errors = new Collection;
 
-          foreach($validator->errors()->toArray() as $errormsg)
-          {
-              $errors->push($errormsg[0]);
-          }
-          return redirect()->back()->withErrors($validator);
-      }
-    
-      $user = new User;
+            foreach($validator->errors()->toArray() as $errormsg)
+            {
+                $errors->push($errormsg[0]);
+            }
+            return redirect()->back()->withErrors($validator);
+        }
 
-      $user->fill($request->all());
-      $user->password = $request->input('password');
-      $user->api_token = str_random(60);
-      if (!$user->save())
-      {
-          return redirect()->back()->withErrors("Unable to create user at this time");
+        $user = new User;
+
+        $user->fill($request->all());
+        $user->password = $request->input('password');
+        $user->api_token = str_random(60);
+        $user->company_id = $request->company;
+        if (!$user->save())
+        {
+            return redirect()->back()->withErrors("Unable to create user at this time");
+        }
+        else
+        {
+            return redirect()->route('home');
+        }
       }
-      else
-      {
-          return redirect()->route('home');
+
+      else{
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = new Collection;
+
+            foreach($validator->errors()->toArray() as $errormsg)
+            {
+                $errors->push($errormsg[0]);
+            }
+            return redirect()->back()->withErrors($validator);
+        }
+
+        $user = new User;
+
+        $user->fill($request->all());
+        $user->password = $request->input('password');
+        $user->api_token = str_random(60);
+        $user->company_id = 0;
+        if (!$user->save())
+        {
+            return redirect()->back()->withErrors("Unable to create user at this time");
+        }
+        else
+        {
+            return redirect()->route('home');
+        }
       }
+
     }
 
 }

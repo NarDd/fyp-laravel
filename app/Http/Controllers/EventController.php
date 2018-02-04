@@ -31,7 +31,23 @@ class EventController extends Controller
 
     public function getUpcomingEvent()
     {
-      $allevents = Event::with('eventdates','photos')->get();
+      if(Auth::check()){
+        $user = User::find(Auth::id());
+        if($user->isadmin == 1){
+          $allevents = Event::with('eventdates')->get();
+        }
+        else{
+          if($user->status == "Approved"){
+            $allevents = Event::with('eventdates')->where('company_id',$user->company_id)->orWhereNull('company_id')->get();
+          }
+          else{
+            $allevents = Event::with('eventdates')->whereNull('company_id')->get();
+          }
+        }
+      }
+      else{
+        $allevents = Event::with('eventdates')->whereNull('company_id')->get();
+      }
       $events = array();
       foreach($allevents as $evt) {
         $lastdate = $evt->eventdates()->orderBy('date', 'desc')->first();
@@ -45,7 +61,23 @@ class EventController extends Controller
 
     public function getPastEvent()
     {
-      $allevents = Event::with('eventdates')->get();
+      if(Auth::check()){
+        $user = User::find(Auth::id());
+        if($user->isadmin == 1){
+          $allevents = Event::with('eventdates')->get();
+        }
+        else{
+          if($user->status == "Approved"){
+            $allevents = Event::with('eventdates')->where('company_id',$user->company_id)->orWhereNull('company_id')->get();
+          }
+          else{
+            $allevents = Event::with('eventdates')->whereNull('company_id')->get();
+          }
+        }
+      }
+      else{
+        $allevents = Event::with('eventdates')->whereNull('company_id')->get();
+      }
       $events = array();
       foreach($allevents as $evt) {
         $lastdate = $evt->eventdates()->orderBy('date','desc')->first();
@@ -62,31 +94,82 @@ class EventController extends Controller
       $dates = Event::find($id)->eventdates()->get();
       $skill = Event::find($id)->skills()->get();
 
-  
-
       if(Auth::check()){
         $user = Auth::id();
-        $isadmin = Auth::user()->isadmin;
+        if($event->company_id){
+          if(Auth::user()->isadmin == 1){
+             $isadmin = 1;
+             $eventUserStatus = Event_Has_Users::where('user_id', $user)->where('event_id',$request->id)->get()->first();
+             if($eventUserStatus){
+               $status = 1;
+             }
+             else{
+               $status = 0;
+             }
 
-        $usereventstatus = Event_Has_Users::where('user_id', $user)->where('event_id',$id)->get()->first();
+             $past = 0;
 
-        if($usereventstatus){
-          $status = 1;
+             return view("pages.event",compact('event','dates','skill','photo','user','status','past','isadmin'));
+          }
+          elseif(Auth::user()->company_id == $event->company_id){
+            $isadmin = 0;
+            $eventUserStatus = Event_Has_Users::where('user_id', $user)->where('event_id',$request->id)->get()->first();
+            if($eventUserStatus){
+              $status = 1;
+            }
+            else{
+              $status = 0;
+            }
+
+            $past = 0;
+            return view("pages.event",compact('event','dates','skill','photo','user','status','past','isadmin'));
+          }
+
+          else{
+            return response()->view('errors.403');
+          }
+        }
+        //not company event
+        else{
+          if(Auth::user()->isadmin == 1){
+             $isadmin = 1;
+           }
+         else{
+            $isadmin = 0;
+          }
+
+         $eventUserStatus = Event_Has_Users::where('user_id', $user)->where('event_id',$request->id)->get()->first();
+         if($eventUserStatus){
+           $status = 1;
+         }
+         else{
+           $status = 0;
+         }
+
+         $past = 0;
+
+         return view("pages.event",compact('event','dates','skill','photo','user','status','past','isadmin'));
+
+        }
         }
         else{
+          $isadmin = 0;
+          $user = "";
+          $past = 0;
           $status = 0;
+
+          return view("pages.event",compact('event','dates','skill','photo','user','status','past','isadmin'));
+
         }
 
-        return view("pages.event",compact('event','dates','skill','photo','user','status','past','isadmin'));
-      }
-      else{
-        $user = 0;
-        return view("pages.event",compact('event','dates','skill','photo','user','status','past','isadmin'));
       }
 
 
 
-    }
+
+
+
+
 
     public function postVolunteer(Request $request){
       if($request->submit == "Volunteer"){

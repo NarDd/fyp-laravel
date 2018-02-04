@@ -42,13 +42,19 @@
             <div class="col s12">
               <a href="{{ route('upcoming.events') }}"><h5>Join our upcoming events</h5></a>
               <div class="slickdiv">
+
+
                 @foreach($slickphotos as $ph)
-                <div class="field-item even slick-slide slick-active">
-                  <a href="{{route('event.view',['id' => $ph->id, 'past' => 0])}}">
-                  <img src="{{ asset('eventimg') }}/{{$ph->photos[0]->url}}" style="max-height:300px;max-width:500px" />
-                  <div class="caption">{{$ph->event_name}}</div>
-                  </a>
-                </div>
+
+                    <div class="field-item even slick-slide slick-active">
+                      <a href="{{route('event.view',['id' => $ph->id, 'past' => 0])}}">
+                      <img src="{{ asset('eventimg') }}/{{$ph->photos[0]->url}}" style="max-height:300px;max-width:500px" />
+                      <div class="caption">{{$ph->event_name}}</div>
+                      </a>
+                    </div>
+
+
+
                 @endforeach
               </div>
             </div>
@@ -67,7 +73,34 @@
 @section('scripts')
 <script type="text/javascript" src="{{ asset('js/slick/slick.min.js') }}"></script>
 
+
 <script>
+@if(count($slickphotos) == 1){
+  $(document).ready(function(){
+  $('.slickdiv').slick({
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    centerMode: true,
+    autoplaySpeed: 2000,
+  });
+
+  });
+}
+@elseif(count($slickphotos) == 2)
+$(document).ready(function(){
+$('.slickdiv').slick({
+  infinite: true,
+  slidesToShow: 2,
+  slidesToScroll: 1,
+  autoplay: true,
+  centerMode: true,
+  autoplaySpeed: 2000,
+});
+
+});
+@else
 $(document).ready(function(){
 $('.slickdiv').slick({
   infinite: true,
@@ -79,6 +112,8 @@ $('.slickdiv').slick({
 });
 
 });
+@endif
+
 </script>
 
 @endsection

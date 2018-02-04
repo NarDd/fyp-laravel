@@ -39,9 +39,33 @@
         </div>
 <!-- Create event  -->
 <div class="row">
-
       <div class="card">
       <h5>Event Details</h5>
+      <div class="row">
+        <div class="col s12">
+          <div class="col s12">
+          <br>
+          <input type="checkbox" name="corporate" id="corporate" />
+          <label for="corporate">Corporate Event</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12" id="actions" hidden>
+            <div class="input-field col s12">
+              <select name="company" id="company">
+                <option value="" disabled selected>Select your company</option>
+                @foreach($companies as $company)
+                <option value="{{$company->id}}">{{$company->name}}</option>
+                @endforeach
+              </select>
+              <label for="company">Select Company</label>
+            </div>
+          </div>
+
+      </div>
+
       <div class="row">
         <div class="col s12">
         <div class="input-field col s12">
@@ -234,6 +258,12 @@ function timePicker(){
     $('input#input_text, textarea#textarea1').characterCounter();
     datePicker();
     timePicker();
+
+    var checkboxes = $("input[type='checkbox']"),
+    actions = $("#actions");
+    checkboxes.click(function() {
+    actions.attr("hidden", !checkboxes.is(":checked"))
+    });
 });
 
 </script>

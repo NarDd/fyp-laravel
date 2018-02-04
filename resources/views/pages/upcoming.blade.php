@@ -39,6 +39,13 @@
                       </div>
 
                     <div class="card-content">
+                      @if($event->company_id)
+                      <div class="row">
+                        <div class="col s12">
+                            <span>Company Event</span>
+                        </div>
+                      </div>
+                      @endif
                       <div class="row">
                       <div class="col s2">
                       <span class="card-text">Date:</span>

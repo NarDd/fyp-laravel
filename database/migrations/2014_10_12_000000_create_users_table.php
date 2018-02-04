@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->dateTimeTz('status_updated_at')->nullable();
             $table->string('provider_user_id')->nullable();
             $table->string('provider')->nullable();
+            $table->integer('company_id');
             $table->rememberToken();
             $table->timestamps();
         });

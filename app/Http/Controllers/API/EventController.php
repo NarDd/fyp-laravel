@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\Event_Has_Users;
 use App\Models\Event_Has_Dates;
 use App\Models\Attendance;
+use App\Models\User;
 use Carbon\Carbon;
 use Validator;
 
@@ -16,17 +17,45 @@ use Illuminate\Support\Collection;
 
 class EventController extends Controller
 {
-  public function getUpcoming(){
-    $allevents = Event::with('eventdates','photos','users')->get();
-    $events = array();
-    foreach($allevents as $evt) {
-      $lastdate = $evt->eventdates()->orderBy('date', 'desc')->first();
-      if ($lastdate->date >= (Carbon::today()->toDateString())) // TODO compare carbon date
-      {
-        array_push($events, $evt);
+  public function getUpcomingEvents($user_id){
+    //find user account
+    $user = User::find($user_id);
+    if($user->isadmin == 1){
+      $allevents = Event::with('eventdates','photos','users')->get();
+      $events = array();
+      foreach($allevents as $evt) {
+        $lastdate = $evt->eventdates()->orderBy('date', 'desc')->first();
+        if ($lastdate->date >= (Carbon::today()->toDateString())) // TODO compare carbon date
+        {
+          array_push($events, $evt);
+        }
       }
+      return response($events)->setStatusCode(200);
     }
-    return response($events)->setStatusCode(200);
+    elseif($user->company_id && $user->status == "Approved"){
+      $allevents = Event::with('eventdates','photos','users')->where('company_id',$user->company_id)->orWhereNull('company_id')->get();
+      $events = array();
+      foreach($allevents as $evt) {
+        $lastdate = $evt->eventdates()->orderBy('date', 'desc')->first();
+        if ($lastdate->date >= (Carbon::today()->toDateString()))
+        {
+          array_push($events, $evt);
+        }
+      }
+      return response($events)->setStatusCode(200);
+    }
+    else{
+      $allevents = Event::with('eventdates','photos','users')->whereNull('company_id')->get();
+      $events = array();
+      foreach($allevents as $evt) {
+        $lastdate = $evt->eventdates()->orderBy('date', 'desc')->first();
+        if ($lastdate->date >= (Carbon::today()->toDateString()))
+        {
+          array_push($events, $evt);
+        }
+      }
+      return response($events)->setStatusCode(200);
+    }
   }
 
   public function getEventAttendance($id, $user){
@@ -59,19 +88,6 @@ class EventController extends Controller
       $attendance->save();
     }
     return response($request->users);
-  }
-
-
-  public function getPastEvent()
-  {
-    $allevents = Event::with('eventdates','photos')->get();
-    $events = array();
-    foreach($allevents as $evt) {
-      $lastdate = $evt->eventdates()->orderBy('date','desc')->first();
-      if ($lastdate->date < (Carbon::today()->toDateString())) // TODO compare carbon date
-        array_push($events, $evt);
-    }
-    return response($events)->setStatusCode(200);
   }
 
   public function getSecret($id)
@@ -130,6 +146,51 @@ class EventController extends Controller
     }
     return response($request)->setStatusCode(200);
   }
+
+
+
+
+  public function getPastEvents($user_id){
+    //find user account
+    $user = User::find($user_id);
+    if($user->isadmin == 1){
+      $allevents = Event::with('eventdates','photos','users')->get();
+      $events = array();
+      foreach($allevents as $evt) {
+        $lastdate = $evt->eventdates()->orderBy('date', 'desc')->first();
+        if ($lastdate->date < (Carbon::today()->toDateString())) // TODO compare carbon date
+        {
+          array_push($events, $evt);
+        }
+      }
+      return response($events)->setStatusCode(200);
+    }
+    elseif($user->company_id && $user->status == "Approved"){
+      $allevents = Event::with('eventdates','photos','users')->where('company_id',$user->company_id)->orWhereNull('company_id')->get();
+      $events = array();
+      foreach($allevents as $evt) {
+        $lastdate = $evt->eventdates()->orderBy('date', 'desc')->first();
+        if ($lastdate->date < (Carbon::today()->toDateString()))
+        {
+          array_push($events, $evt);
+        }
+      }
+      return response($events)->setStatusCode(200);
+    }
+    else{
+      $allevents = Event::with('eventdates','photos','users')->whereNull('company_id')->get();
+      $events = array();
+      foreach($allevents as $evt) {
+        $lastdate = $evt->eventdates()->orderBy('date', 'desc')->first();
+        if ($lastdate->date < (Carbon::today()->toDateString()))
+        {
+          array_push($events, $evt);
+        }
+      }
+      return response($events)->setStatusCode(200);
+    }
+  }
+
 
 
 }

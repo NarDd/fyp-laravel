@@ -60,14 +60,42 @@
               </div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col s11">
+                <div class="col s4">
+                  <h6>Account Type</h6>
+                <input class="with-gap" name="corporate" value="0" type="radio" id="individual" onclick="hide()" />
+                <label for="individual">Individual</label>
+                </div>
+                <div class="col s4">
+                <br>
+                <input class="with-gap" name="corporate" value="1" type="radio" id="corporate" onclick="show()"/>
+                <label for="corporate">Corporate</label>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row" id="corporatebox" style="display:none">
+              <div class="col s11">
+              <div class="input-field col s12">
+                <select name="company">
+                  <option value="" disabled selected>Select your company</option>
+                  @foreach($companies as $company)
+                  <option value="{{$company->id}}">{{$company->name}}</option>
+                  @endforeach
+                </select>
+              </div>
+              </div>
+            </div>
+
             <div class="row">
             <div class="col s12">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="submit" value="Register" class="btn btn-primary right">
             </div>
             </div>
-
-
           </form>
       </div>
 
@@ -79,5 +107,17 @@
 @endsection
 
 @section('scripts')
+<script>
+  $(document).ready(function() {
+    $('select').material_select();
+  });
 
+  function show(){
+   document.getElementById('corporatebox').style.display = 'block';
+  }
+
+  function hide(){
+   document.getElementById('corporatebox').style.display = 'none';
+  }
+</script>
 @endsection

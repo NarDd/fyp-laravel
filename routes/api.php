@@ -3,13 +3,23 @@
 use Illuminate\Http\Request;
 
 Route::group(['namespace' => 'API', 'middleware' => ['cors']], function () {
+//Before login calls
   Route::post('/signin',['as' => 'api.login', 'uses' => 'UserController@postSignIn']);
+  Route::post('/register',['as' => 'api.register', 'uses' => 'UserController@createUser']);
+  Route::get('/companies',['as' => 'api.companies', 'uses' => 'UserController@getCompanies']);
+
+//Event Pages Calls
+  Route::get('/upcoming/{user_id}',['as' => 'api.upcoming', 'uses' => 'EventController@getUpcomingEvents']);
+  Route::get('/pastevents/{user_id}',['as' => 'api.past', 'uses' => 'EventController@getPastEvents']);
+
+
+
   Route::get('/user',['as' => 'api.getusers', 'uses' => 'UserController@getUsers']);
   Route::get('/getuser/{id}',['as' => 'api.getUser', 'uses' => 'UserController@getUserData']);
-  Route::post('/register',['as' => 'api.register', 'uses' => 'UserController@createUser']);
 
-  Route::get('/upcoming',['as' => 'api.upcoming', 'uses' => 'EventController@getUpcoming']);
-  Route::get('/pastevents',['as' => 'api.past', 'uses' => 'EventController@getPastEvent']);
+
+
+
   Route::get('/myevent/{id}',['as' => 'api.myevent', 'uses' => 'EventController@getMyEvent']);
 
   Route::post('/setVolunteer',['as' => 'api.volunteer', 'uses' => 'EventController@postVolunteer']);
