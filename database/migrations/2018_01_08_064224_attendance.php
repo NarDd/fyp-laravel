@@ -20,7 +20,7 @@ class Attendance extends Migration
           $table->boolean('attendance');
           $table->timestamp('pressed')->nullable();
           $table->timestamp('scanned')->nullable();
-          $table->timestamp('noofclicks')->nullable();
+          $table->integer('noofclicks')->nullable();
           $table->timestamps();
       });
     }
