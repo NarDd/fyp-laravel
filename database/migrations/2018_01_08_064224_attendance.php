@@ -18,6 +18,9 @@ class Attendance extends Migration
           $table->integer('event_has_dates_id');
           $table->integer('user_id');
           $table->boolean('attendance');
+          $table->timestamp('pressed')->nullable();
+          $table->timestamp('scanned')->nullable();
+          $table->timestamp('noofclicks')->nullable();
           $table->timestamps();
       });
     }
