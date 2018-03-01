@@ -102,7 +102,7 @@ class EventController extends Controller
     $attendance->attendance = 1;
     $attendance->pressed = $request->btn_click;
     $attendance->scanned = $request->receive_datetime;
-    $attendance->noofclicks = 5; 
+    $attendance->noofclicks = $request->noofclick; 
     $attendance->save();
     return response($attendance)->setStatusCode(200);
   }
