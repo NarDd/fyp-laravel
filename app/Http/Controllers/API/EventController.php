@@ -101,6 +101,8 @@ class EventController extends Controller
     $attendance = Attendance::where('event_has_dates_id',$request->event_id)->where('user_id',$request->user_id)->first();
     $attendance->attendance = 1;
     $attendance->pressed = $request->btn_click;
+    $attendance->scanned = $request->receive_datetime;
+    $attendance->noofclicks = $request->noofclick; 
     $attendance->save();
     return response($attendance)->setStatusCode(200);
   }
