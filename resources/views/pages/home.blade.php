@@ -85,7 +85,7 @@
     centerMode: true,
     autoplaySpeed: 2000,
   });
-
+  
   });
 }
 @elseif(count($slickphotos) == 2)

@@ -134,6 +134,7 @@ class EventController extends Controller
         $event->created_at = Carbon::now()->toDateTimeString();
         $event->contact_id = $request->contact_id;
         $event->company_id = $request->company;
+        $event->msg = $request->msg;
 
         if (!$event->save())
         {
@@ -240,7 +241,7 @@ class EventController extends Controller
         $event->created_by = Auth::user()->id;
         $event->created_at = Carbon::now()->toDateTimeString();
         $event->contact_id = $request->contact_id;
-
+        $event->msg = $request->msg;
         if (!$event->save())
         {
           return redirect()->back()->withErrors('Unable to create event');
@@ -322,32 +323,25 @@ class EventController extends Controller
 
     }
 
+//to remove
+    public function postUpdateSkill(Request $request){
+      $alluserskills = User::find(Auth::user()->id)->skills()->get()->pluck('id');
+      $reqskills = $request->skills;
+      $user = User::find(Auth::user()->id);
+      $user->skills()->sync($reqskills);
+      return redirect()->route('home');
+    }
 
     public function postUpdateEvent(Request $request){
-      $validator = Validator::make($request->all(), [
-          'event_name' => 'required',
-          'desc' => 'required',
-          'location' => 'required',
-          'image' => 'required',
-          'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-      ]);
+      $event = Event::find($request->id);
 
-      if ($validator->fails()) {
-          $errors = new Collection;
-
-          foreach($validator->errors()->toArray() as $errormsg)
-          {
-              $errors->push($errormsg[0]);
-          }
-
-          return redirect()->back()->withErrors($validator);
-      }
-
+      // dd($request->all());
       $event = new Event;
       $event->fill($request->all());
       $event->created_by = Auth::user()->id;
       $event->created_at = Carbon::now()->toDateTimeString();
       $event->contact_id = $request->contact_id;
+      $event->msg = $request->msg;
 
       if (!$event->save())
       {

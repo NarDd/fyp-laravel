@@ -33,7 +33,12 @@
       <li><a href="{{ route('home') }}"><i class="material-icons left">home</i>Home</a></li>
       <li><a href="{{ route('upcoming.events') }}"><i class="material-icons left">event</i>Upcoming Events</a></li>
       <li><a href="{{ route('past.events') }}"><i class="material-icons left">history</i>Past Events</a></li>
-      <li><a class="dropdown-button" href="#!" data-activates="dropdown1" style="width:200px"><i class="material-icons left">settings</i>Admin</a></li>
+        @if(auth()->check())
+         @if(auth()->user()->isadmin == 1){
+             <li><a class="dropdown-button" href="#!" data-activates="dropdown1" style="width:200px"><i class="material-icons left">settings</i>Admin</a></li>
+         }
+         @endif
+        @endif
     </ul>
 
     <ul class="right hide-on-med-and-down">

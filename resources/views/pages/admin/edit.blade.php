@@ -157,7 +157,7 @@
 
 
 
-          <label for="special_skills{{$i}}">Special Skills</label>
+        <label for="special_skills{{$i}}">Special Skills</label>
         </div>
         <div class="col s1">
           <a id="add_skills" href="#!" class="btn-floating btn-medium scale-transition right">
@@ -168,6 +168,15 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col s12">
+          <div class="input-field col s12">
+            <textarea id="msg" name="msg" data-length="300" placeholder="e.g Please Proceed To Level 2" class="materialize-textarea">{{$event->msg}}</textarea>
+            <label for="msg">After Authentication Message</label>
+          </div>
+        </div>
+      </div>
+      <input name="id" type="hidden" value="{{$event->id}}">
       <div class="row">
         <div class="col s12">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">

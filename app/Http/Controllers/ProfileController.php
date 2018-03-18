@@ -78,11 +78,7 @@ class ProfileController extends Controller
       $reqskills = $request->skills;
       $user = User::find(Auth::user()->id);
       $user->skills()->sync($reqskills);
-
-      $skills = Skills::all();
-      $uskill = User::find(Auth::user()->id)->skills()->get();
-
-      return view('pages.updateskill',compact('uskill','skills'));
+      return redirect()->route('home');
     }
 
 

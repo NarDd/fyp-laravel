@@ -149,6 +149,15 @@
 
       <div class="row">
         <div class="col s12">
+          <div class="input-field col s12">
+            <textarea id="msg" name="msg" data-length="300" placeholder="e.g Please Proceed To Level 2" class="materialize-textarea">{{ old('msg') }}</textarea>
+            <label for="msg">After Authentication Message</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <input id="right-btn" type="submit" value="Create Event" class="btn btn-primary">
         </div>

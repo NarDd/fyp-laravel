@@ -71,6 +71,9 @@
               <h6>Special skill required: None </h6>
             @else
             <h6>Special skill required:</h6>
+            @if(count($skill) == 0)
+            None
+            @endif
             @foreach($skill as $sk)
             {{$sk->skill_name}}
             <br>

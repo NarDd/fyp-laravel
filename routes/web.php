@@ -19,30 +19,36 @@
 
 
 // Admin Pages
-Route::get('/events/create',['as' => 'admin.event.create', 'uses' => 'Admin\EventController@getCreateEvent']);
-Route::post('/events/create',['as' => 'admin.event.create.post','uses' => 'Admin\EventController@postCreateEvent']);
-Route::get('/skills',['as' => 'admin.skills.get','uses' => 'Admin\SkillsController@getSkills']);
-Route::post('/skills',['as' => 'admin.skills.post','uses' => 'Admin\SkillsController@postSkills']);
-Route::get('/createskill',['as' => 'admin.create.skill.get','uses' => 'Admin\SkillsController@getCreateSkills']);
-Route::post('/createskill',['as' => 'admin.create.skill.post','uses' => 'Admin\SkillsController@postCreateSkills']);
+Route::group(['middleware' => ['admin']], function(){
+  Route::get('/events/create',['as' => 'admin.event.create', 'uses' => 'Admin\EventController@getCreateEvent']);
+  Route::post('/events/create',['as' => 'admin.event.create.post','uses' => 'Admin\EventController@postCreateEvent']);
+  Route::get('/skills',['as' => 'admin.skills.get','uses' => 'Admin\SkillsController@getSkills']);
+  Route::post('/skills',['as' => 'admin.skills.post','uses' => 'Admin\SkillsController@postSkills']);
+  Route::get('/createskill',['as' => 'admin.create.skill.get','uses' => 'Admin\SkillsController@getCreateSkills']);
+  Route::post('/createskill',['as' => 'admin.create.skill.post','uses' => 'Admin\SkillsController@postCreateSkills']);
+  Route::get('/events/view/all',['as' => 'admin.event.viewall', 'uses' => 'Admin\EventController@getAllEvent']);
+  Route::get('/events/edit/{id}',['as' => 'admin.event.edit', 'uses' => 'Admin\EventController@getEditEvent']);
+  Route::post('/events/edit/{id}',['as' => 'admin.event.edit.post','uses' => 'Admin\EventController@postUpdateEvent']);
+
+  Route::get('/manage/users',['as' => 'admin.manage.userlist','uses' => 'Admin\UserController@getUserList']);
+  Route::post('/manage/users',['as' => 'admin.user.approval','uses' => 'Admin\UserController@postUserList']);
+
+  Route::get('/manage/admin',['as' => 'admin.manage.adminlist','uses' => 'Admin\UserController@getAdminList']);
+  Route::post('/manage/admin',['as' => 'admin.manage.adminapprove','uses' => 'Admin\UserController@postAdminList']);
+
+  Route::get('/manage/users/{id}',['as' => 'admin.manage.user','uses' => 'Admin\UserController@getUser']);
+  Route::get('/manage/companies',['as' => 'admin.manage.companies','uses' => 'Admin\CompanyController@getCompanies']);
+  Route::post('/manage/companies/add',['as' => 'admin.manage.add.companies.post','uses' => 'Admin\CompanyController@postCompaniesAdd']);
+  Route::get('/manage/companies/add',['as' => 'admin.manage.add.companies','uses' => 'Admin\CompanyController@getCompanyAdd']);
+
+
+});
+
+
 
 // Route::get('/events/create',['as' => 'admin.event.create.get','uses' => 'ImageController@eventImgUpload']);
 // Route::post('/events/create',['as' => 'admin.event.create.post','uses' => 'Admin\ImageController@eventImgUploadPost']);
 
-Route::get('/events/view/all',['as' => 'admin.event.viewall', 'uses' => 'Admin\EventController@getAllEvent']);
-Route::get('/events/edit/{id}',['as' => 'admin.event.edit', 'uses' => 'Admin\EventController@getEditEvent']);
-Route::post('/events/edit/{id}',['as' => 'admin.event.edit.post','uses' => 'Admin\EventController@postUpdateEvent']);
-
-Route::get('/manage/users',['as' => 'admin.manage.userlist','uses' => 'Admin\UserController@getUserList']);
-Route::post('/manage/users',['as' => 'admin.user.approval','uses' => 'Admin\UserController@postUserList']);
-
-Route::get('/manage/admin',['as' => 'admin.manage.adminlist','uses' => 'Admin\UserController@getAdminList']);
-Route::post('/manage/admin',['as' => 'admin.manage.adminapprove','uses' => 'Admin\UserController@postAdminList']);
-
-Route::get('/manage/users/{id}',['as' => 'admin.manage.user','uses' => 'Admin\UserController@getUser']);
-Route::get('/manage/companies',['as' => 'admin.manage.companies','uses' => 'Admin\CompanyController@getCompanies']);
-Route::post('/manage/companies/add',['as' => 'admin.manage.add.companies.post','uses' => 'Admin\CompanyController@postCompaniesAdd']);
-Route::get('/manage/companies/add',['as' => 'admin.manage.add.companies','uses' => 'Admin\CompanyController@getCompanyAdd']);
 
 Route::get('/companies/{id}',['as' => 'coordinator.view.company','uses' => 'Coordinators\Coordinator@getCompany']);
 Route::post('/companies/{id}',['as' => 'coordinator.view.company.post','uses' => 'Coordinators\Coordinator@postCompany']);
@@ -67,6 +73,10 @@ Route::get('/profile/update',['as' => 'profile.update.get', 'uses' => 'ProfileCo
 Route::post('/profile/update/skill',['as' => 'profile.update.skill.post', 'uses' => 'ProfileController@postUpdateSkill']);
 Route::get('/profile/update/skill',['as' => 'profile.update.skill.get', 'uses' => 'ProfileController@getUpdateSkill']);
 // Accessible by Volunteers
+
+//test Middleware
+
+
 
 // Login/Logout
 Route::post('/login',['as' => 'login.post','uses' => 'Auth\AuthController@postLogin']);

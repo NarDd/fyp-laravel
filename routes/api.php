@@ -6,6 +6,7 @@ Route::group(['namespace' => 'API', 'middleware' => ['cors']], function () {
 //Before login calls
   Route::post('/signin',['as' => 'api.login', 'uses' => 'UserController@postSignIn']);
   Route::post('/register',['as' => 'api.register', 'uses' => 'UserController@createUser']);
+  Route::post('/checker',['as' => 'api.checker', 'uses' => 'EventController@checker']);
   Route::get('/companies',['as' => 'api.companies', 'uses' => 'UserController@getCompanies']);
 
 //Event Pages Calls
