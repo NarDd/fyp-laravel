@@ -66,19 +66,7 @@
             <br>
             <h6>Description:</h6>
             {{$event->desc}}<br>
-            <br>
-            @if(!$skill)
-              <h6>Special skill required: None </h6>
-            @else
-            <h6>Special skill required:</h6>
-            @if(count($skill) == 0)
-            None
-            @endif
-            @foreach($skill as $sk)
-            {{$sk->skill_name}}
-            <br>
-            @endforeach
-            @endif
+          
           </div>
         </div>
 

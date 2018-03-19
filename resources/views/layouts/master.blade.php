@@ -72,7 +72,7 @@
 <ul id="dropdown1" class="dropdown-content">
 <li><a class="dropdown-item" href="{{ route('admin.event.create') }}">Create Event</a></li>
 <li><a class="dropdown-item" href="{{ route('admin.event.viewall') }}">Update Events</a></li>
-<li><a class="dropdown-item" href="{{ route('admin.create.skill.get') }}">Add Skills</a></li>
+<!-- <li><a class="dropdown-item" href="{{ route('admin.create.skill.get') }}">Add Skills</a></li> -->
 <li class="divider"></li>
 <li><a class="dropdown-item" href="{{ route('admin.manage.userlist') }}">Account Management</a></li>
 <li><a class="dropdown-item" href="{{ route('admin.manage.adminlist') }}">Admin Management</a></li>

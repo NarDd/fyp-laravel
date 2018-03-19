@@ -107,11 +107,6 @@ class EventController extends Controller
     return response($attendance)->setStatusCode(200);
   }
 
-  public function checker(Request $request){
-    $id = $request->uniqueid;
-    return response($id)->setStatusCode(200);
-  }
-
   public function getMyEvent($id){
     $eve = Event::with('photos','eventdates')->whereHas('users', function ($query) use ($id)  {
     $query->where('user_id', $id);

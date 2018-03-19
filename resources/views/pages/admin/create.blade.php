@@ -126,7 +126,7 @@
         </div>
       </div>
 
-      <div class="row" id="skill_rows">
+      <!-- <div class="row" id="skill_rows">
         <div class="col s12">
         <h5>Special Skills Needed</h5>
         <div class="input-field col s11">
@@ -154,7 +154,7 @@
             <label for="msg">After Authentication Message</label>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="row">
         <div class="col s12">

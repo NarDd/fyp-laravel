@@ -25,7 +25,6 @@ class UserController extends Controller
     if (Auth::attempt($creds)) {
        $userid = auth()->user()->id;
        $user = User::with('skills')->find($userid);
-       $hello = 1;
        return response()->json(compact('user'));
     }
     else{
@@ -106,6 +105,7 @@ class UserController extends Controller
       $user = new User;
       $user->fill($request->all());
       $user->password = $request->password;
+      $user->company_id = 0;
       $user->api_token = str_random(60);
       if (!$user->save())
       {
