@@ -49,7 +49,7 @@
                     <div class="field-item even slick-slide slick-active">
                       <a href="{{route('event.view',['id' => $ph->id, 'past' => 0])}}">
                       <img src="{{ asset('eventimg') }}/{{$ph->photos[0]->url}}" style="max-height:300px;max-width:500px" />
-                      <div class="caption">{{$ph->event_name}}</div>
+                      
                       </a>
                     </div>
 
@@ -85,7 +85,7 @@
     centerMode: true,
     autoplaySpeed: 2000,
   });
-  
+
   });
 }
 @elseif(count($slickphotos) == 2)
