@@ -240,7 +240,6 @@ class EventController extends Controller
         $event->created_by = Auth::user()->id;
         $event->created_at = Carbon::now()->toDateTimeString();
         $event->contact_id = $request->contact_id;
-        $event->msg = $request->msg;
         if (!$event->save())
         {
           return redirect()->back()->withErrors('Unable to create event');
@@ -340,7 +339,6 @@ class EventController extends Controller
       $event->created_by = Auth::user()->id;
       $event->created_at = Carbon::now()->toDateTimeString();
       $event->contact_id = $request->contact_id;
-      $event->msg = $request->msg;
 
       if (!$event->save())
       {
