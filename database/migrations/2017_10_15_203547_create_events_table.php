@@ -21,7 +21,6 @@ class CreateEventsTable extends Migration
           $table->string('contact_id');
           $table->string('created_by');
           $table->integer('company_id')->nullable();
-          $table->string('msg')->nullable();
           $table->timestamps();
         });
     }

@@ -134,7 +134,6 @@ class EventController extends Controller
         $event->created_at = Carbon::now()->toDateTimeString();
         $event->contact_id = $request->contact_id;
         $event->company_id = $request->company;
-        $event->msg = $request->msg;
 
         if (!$event->save())
         {
